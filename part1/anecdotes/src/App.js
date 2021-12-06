@@ -5,7 +5,6 @@ const Button = ({clickHandler,text}) => {
     <button onClick={clickHandler}>{text}</button>
   )
 }
-
 const App = () => {
   const anecdotes = [
     'Adding manpower to a late software project makes it later!',
@@ -16,14 +15,39 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
 
-  const [selected,setSelected] = useState(0)
 
+
+  const changeSelected = () => {
+    setSelected(Math.floor(Math.random() * anecdotes.length))
+  }  
+  const [popular,setPopular] = useState(0)
+  const [votes,setVotes] = useState(new Array(anecdotes.length).fill(0))
+  const [selected,setSelected] = useState(0)
+  const handleVote = () =>{
+    let cp_votes = [...votes]
+    cp_votes[selected] += 1
+    setVotes(cp_votes)
+    if (cp_votes[selected] > cp_votes[popular]) {
+      setPopular(selected)
+    } 
+  }
   return (
     <div>
-      <h3>
-        {anecdotes[selected]}
-      </h3>
-      <Button clickHandler={()=>setSelected(Math.floor(Math.random() * anecdotes.length))} text="Moar Wisdom"/>
+      <div>
+        <h3>
+          Anecdote of the day 
+        </h3>
+        <p>{anecdotes[selected]}</p>
+        <div>
+          <h3>Updoots: {votes[selected]}</h3>
+          <Button clickHandler={handleVote}  text="Vote for this"/> 
+        </div>
+      </div>
+      <Button clickHandler={changeSelected} text="Moar Wisdom"/>
+      <div>
+        <h3>Most popular Anecdote</h3>
+        <p>{anecdotes[popular]}</p>
+      </div>
     </div>
   )
 }
