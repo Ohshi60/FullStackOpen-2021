@@ -8,26 +8,37 @@ const Button = ({handleClick, text}) => {
     </button>
   )
 }
-
+const StatisticsLine = ({name, value }) => {
+  return (
+   <tr>
+     <td>{name}</td>
+     <td>{value}</td>
+   </tr> 
+  )
+}
 const Statistics = ({good,neutral,bad}) => {
   const total_votes = good+neutral+bad
-  const avr = good - bad 
+  
+  const avr = (good - bad) / total_votes 
   const happyPercent = good / total_votes * 100
+  
   return (
     <div>
       <h1> Statistics </h1>
-      <p>
-        Good: {good}
-      </p>
-      <p>
-        Neutral: {neutral}
-      </p>
-      <p>
-        Bad: {bad}
-      </p>
-      <p> Total votes submitted: {total_votes}</p>
-      <p>Average rating: {avr}</p>
-      <p> Happy Percentage: {happyPercent} % </p>
+      {!total_votes ? (<div>No feedback given</div>) :
+      (
+        <table>
+          <tbody>
+            <StatisticsLine name="Good" value={good} />
+            <StatisticsLine name="Neutral" value={neutral} />
+            <StatisticsLine name="bad" value={bad} />
+            <StatisticsLine name="total votes" value={total_votes} />
+            <StatisticsLine name="average score" value={avr} />
+            <StatisticsLine name="Positive percentage" value={happyPercent+" %"} />    
+          </tbody>
+        </table>
+      )
+      }
     </div>
   )
 }
