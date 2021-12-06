@@ -10,17 +10,24 @@ const Button = ({handleClick, text}) => {
 }
 
 const Statistics = ({good,neutral,bad}) => {
+  const total_votes = good+neutral+bad
+  const avr = good - bad 
+  const happyPercent = good / total_votes * 100
   return (
     <div>
+      <h1> Statistics </h1>
       <p>
-        {good}
+        Good: {good}
       </p>
       <p>
-        {neutral}
+        Neutral: {neutral}
       </p>
       <p>
-        {bad}
+        Bad: {bad}
       </p>
+      <p> Total votes submitted: {total_votes}</p>
+      <p>Average rating: {avr}</p>
+      <p> Happy Percentage: {happyPercent} % </p>
     </div>
   )
 }
